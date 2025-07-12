@@ -1,0 +1,530 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>PVE找不到外接硬盘？你还没有挂载吧 | Jony`s Blog</title><meta name="keywords" content="NAS,NAS知识,玩机技巧,PVE"><meta name="author" content="JonyLee"><meta name="copyright" content="JonyLee"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="PVE找不到外接硬盘？你还没有挂载吧"><meta name="application-name" content="PVE找不到外接硬盘？你还没有挂载吧"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="PVE找不到外接硬盘？你还没有挂载吧"><meta property="og:url" content="https://blog.jonylee.top/2025/04/24/2025-04-24 PVE找不到外接硬盘？你还没有挂载吧/index.html"><meta property="og:site_name" content="Jony`s Blog"><meta property="og:description" content="我的小主机内置有一个2.5寸SATA硬盘位，我当时正好手上有一块旧的三星2.5寸SATA SSD，就把它装上了准备暂时做虚拟机的存储盘。 在PVE的文本界面的磁盘选项里，能看到硬盘，但是当我想要为虚拟机添加磁盘的时候，死活找不到这块盘。 后来网上查了才知道，在PVE中除了系统盘，其他硬盘都是需要手动"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://img.jonylee.top/i/2025/05/29/cover20250424mount.png"><meta property="article:author" content="JonyLee"><meta property="article:tag" content="Jony，Web，设计师，建筑师"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://img.jonylee.top/i/2025/05/29/cover20250424mount.png"><meta name="description" content="我的小主机内置有一个2.5寸SATA硬盘位，我当时正好手上有一块旧的三星2.5寸SATA SSD，就把它装上了准备暂时做虚拟机的存储盘。 在PVE的文本界面的磁盘选项里，能看到硬盘，但是当我想要为虚拟机添加磁盘的时候，死活找不到这块盘。 后来网上查了才知道，在PVE中除了系统盘，其他硬盘都是需要手动"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://blog.jonylee.top/2025/04/24/2025-04-24%20PVE%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%96%E6%8E%A5%E7%A1%AC%E7%9B%98%EF%BC%9F%E4%BD%A0%E8%BF%98%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E5%90%A7/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//hm.baidu.com"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?dad4b4383b13eedea1ab45ee323df1c3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: undefined,
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🏘 爱好广泛的建筑师","✏ 主业方案设计","🌐 喜欢Web技术","🎭 关注AICG应用","🗄 探索NAS玩法","✨ 乐于分享经验","🔨 致力高效工作","🏕 乐享快乐生活"]},
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: JonyLee","link":"链接: ","source":"来源: Jony`s Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Jony`s Blog',
+  title: 'PVE找不到外接硬盘？你还没有挂载吧',
+  postAI: '',
+  pageFillDescription: '一、确认要挂载的设备路径, 1. 使用ssh及命令行操作：, 2. Web界面查找设备信息, 二、挂载外接设备, 1. 临时挂载, 2. 永久挂载, 三、其他说明我的小主机内置有一个寸硬盘位我当时正好手上有一块旧的三星寸就把它装上了准备暂时做虚拟机的存储盘在的文本界面的磁盘选项里能看到硬盘但是当我想要为虚拟机添加磁盘的时候死活找不到这块盘后来网上查了才知道在中除了系统盘其他硬盘都是需要手动挂载的挂载之后创建虚拟机给虚拟机增加磁盘或者开启备份时选择存储才会出现这个磁盘的选项其实系统本来外部设备就都这样需要先挂载才能使用的但是这个的界面的磁盘选项里已经显示这个设备了我还以为它已经自动挂载了呢然而并没有昨天写的用移动硬盘作为虚拟机快照备份的存储也是得要先手动挂载磁盘才能用那这里就写一下基本的挂载操作供新手参考玩其他系统的其实也能用到挂载操作是一样的步骤如下一确认要挂载的设备路径接入硬盘后可以通过命令查看移动硬盘的分区信息系统也可以直接从端查看使用及命令行操作可在连接的终端中使用如下命令或使用返回的结果使用返回的是文件结构目录树如下这个命令对磁盘及分区显示比较清晰但是在挂载的时候要记得分区前要加例如上例加入确认移动硬盘为那个则挂载的分区应为而不是或者这里要注意一下而使用另一个命令则会显示更详细的结果示例如下以下省略用此命令可根据也就是设备名称确认你的移动硬盘挂载分区应改从下面找我示例里该硬盘只有一个分区如果你移动硬盘有多个分区需要挂载哪个根据分区大小来寻找挂载路径直接为前面显示的界面查找设备信息的界面里点左侧的根节点再点中间的磁盘选项右侧会直接显示移动硬盘设备和它的分区如下如此时确认需要挂载的备份存储分区例如上图显示的二挂载外接设备挂载移动硬盘等操作只能使用命令行进行临时挂载如果是临时备份使用或其他临时使用可以使用临时挂载创建挂载目录假设为一般是挂载到系统的文件夹下面执行临时挂载命令带赋予读写权限并执行可写入测试以下两行命令分别执行创建挂载目录将设备挂载到创建的目录永久挂载如果是内置硬盘或者是准备作为永久使用的外接硬盘可以使用永久挂载这样当机器重启的时候它就会自动挂载否则机器重启还需要再次手动挂载查看硬盘的示例返回结果如下在中添加挂载信息是一个配置文件开机的时候会加载从而实现开机挂载硬盘功能简便方法可使用命令直接写入以上命令解释命令是控制台打印是将控制台打印转变成输入到某个文件中本次输入到了文件中也就是在文件中加入这行文字写入文件的格式为要挂载的硬盘挂载的目录分区的格式挂载的参数后面两个数字第一个数字是工具会根据这个数字来决定什么时候备份第二个数字表示工具检查的优先级一般也可以用也可以通过命令行文本编辑工具或者等来编辑文件并保存一般系统都内置了编辑器输入命令打开文件下面会有操作提示提示中代表键添加完按退出会提示是否保存更改按保存退出即可但是我觉得对新手来说还是有点麻烦还可以通过前面我分享过的工具直接用记事本打开编辑保存通过连接上服务器之后在右侧找到文件右键点查看编辑即可通过记事本打开它编辑完记得保存关闭三其他说明不管何种挂载拔出设备前务必在命令行执行卸载你的设备挂载目录有点类似于里的点击弹出硬盘操作避免数据损坏可能有细心的朋友看到我截图里挂载的并没有使用而是设备路径其实硬盘挂载有好几种方式建议优选使用因为设备路径的方式虽然直观简单但是设备名可能变化当系统连接的存储设备数量或顺序发生变化时例如新增移除硬盘设备名如可能变为或导致挂载失败而设备是唯一的不会存在这个问题如果挂载移动硬盘等是使用的文件系统挂载写入可能会出现错误这是因为原生默认不支持该文件系统写入操作这时就需要安装驱动使用带参数挂载具体下期分享吧',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-01 22:00:00',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 22
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Jony`s Blog" type="application/atom+xml">
+</head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/loading1.gif"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://jonylee.top/" title="主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/home.png" alt="主页"/><span class="back-menu-item-text">主页</span></a><a class="back-menu-item" href="https://blog.jonylee.top/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/128.png" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">应用</div><div class="back-menu-list"><a class="back-menu-item" href="https://start.jonylee.top/" title="搜·全网"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/search.png" alt="搜·全网"/><span class="back-menu-item-text">搜·全网</span></a><a class="back-menu-item" href="https://music.jonylee.top/" title="听·音乐"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/music.png" alt="听·音乐"/><span class="back-menu-item-text">听·音乐</span></a><a class="back-menu-item" href="https://hot.jonylee.top/" title="看·热榜"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/--tinder.png" alt="看·热榜"/><span class="back-menu-item-text">看·热榜</span></a><a class="back-menu-item" href="https://jonylee.top/mindmap/" title="思·导图"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/idea.png" alt="思·导图"/><span class="back-menu-item-text">思·导图</span></a><a class="back-menu-item" href="https://w.jonylee.top/" title="记·笔记"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/edit--v1.png" alt="记·笔记"/><span class="back-menu-item-text">记·笔记</span></a><a class="back-menu-item" href="https://chat.jonylee.top/" title="问·AI"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/bard.png" alt="问·AI"/><span class="back-menu-item-text">问·AI</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Jony`s Blog</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 拾光</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 好物荐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button only-home" id="travellings_button" title="随机前往一个开往项目网站"><a class="site-page" onclick="anzhiyu.totraveling()" title="随机前往一个开往项目网站" href="javascript:void(0);" rel="external nofollow" data-pjax-state="external"><i class="anzhiyufont anzhiyu-icon-train"></i></a></div><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/img/qrcode-weichat.png" target="_blank"><img class="post-qr-code-img" alt="微信" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/qrcode-weichat.png"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/qrcode-alipay.png" target="_blank"><img class="post-qr-code-img" alt="支付宝" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/qrcode-alipay.png"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI%E5%BA%94%E7%94%A8/" style="font-size: 1.05rem;">AI应用<sup>4</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>2</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>6</sup></a><a href="/tags/NAS/" style="font-size: 1.05rem;">NAS<sup>32</sup></a><a href="/tags/NAS%E7%9F%A5%E8%AF%86/" style="font-size: 1.05rem;">NAS知识<sup>28</sup></a><a href="/tags/Obsidian/" style="font-size: 1.05rem;">Obsidian<sup>1</sup></a><a href="/tags/PC%E8%BD%AF%E4%BB%B6/" style="font-size: 1.05rem;">PC软件<sup>20</sup></a><a href="/tags/PVE/" style="font-size: 1.05rem;">PVE<sup>3</sup></a><a href="/tags/UNRAID/" style="font-size: 1.05rem;">UNRAID<sup>2</sup></a><a href="/tags/emoji/" style="font-size: 1.05rem;">emoji<sup>1</sup></a><a href="/tags/%E4%B8%8B%E8%BD%BD%E5%99%A8/" style="font-size: 1.05rem;">下载器<sup>2</sup></a><a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 1.05rem;">产品设计<sup>1</sup></a><a href="/tags/%E5%85%8D%E8%B4%B9%E9%9F%B3%E4%B9%90%E8%B5%84%E6%BA%90/" style="font-size: 1.05rem;">免费音乐资源<sup>1</sup></a><a href="/tags/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">写作工具<sup>1</sup></a><a href="/tags/%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/" style="font-size: 1.05rem;">办公软件<sup>1</sup></a><a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">图像处理<sup>4</sup></a><a href="/tags/%E5%9B%BE%E7%A4%BA%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">图示工具<sup>1</sup></a><a href="/tags/%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">在线工具<sup>10</sup></a><a href="/tags/%E5%A3%81%E7%BA%B8/" style="font-size: 1.05rem;">壁纸<sup>1</sup></a><a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%94%E7%94%A8/" style="font-size: 1.05rem;">开源应用<sup>8</sup></a><a href="/tags/%E5%BD%B1%E9%9F%B3%E5%A8%B1%E4%B9%90/" style="font-size: 1.05rem;">影音娱乐<sup>9</sup></a><a href="/tags/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" style="font-size: 1.05rem;">思维导图<sup>1</sup></a><a href="/tags/%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" style="font-size: 1.05rem;">手机软件<sup>6</sup></a><a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" style="font-size: 1.05rem;">搜索引擎<sup>1</sup></a><a href="/tags/%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 1.05rem;">播放器<sup>5</sup></a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">效率工具<sup>30</sup></a><a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8/" style="font-size: 1.05rem;">文件管理器<sup>1</sup></a><a href="/tags/%E6%96%B9%E6%B3%95%E6%8A%80%E5%B7%A7/" style="font-size: 1.05rem;">方法技巧<sup>4</sup></a><a href="/tags/%E6%99%AE%E5%88%A9%E5%85%B9%E5%85%8B%E5%A5%96/" style="font-size: 1.05rem;">普利兹克奖<sup>1</sup></a><a href="/tags/%E6%99%BA%E8%83%BD%E7%9B%B8%E5%86%8C/" style="font-size: 1.05rem;">智能相册<sup>1</sup></a><a href="/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/" style="font-size: 1.05rem;">流程图<sup>2</sup></a><a href="/tags/%E7%8E%A9%E5%AE%A2%E4%BA%91/" style="font-size: 1.05rem;">玩客云<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%8A%80%E5%B7%A7/" style="font-size: 1.05rem;">玩机技巧<sup>28</sup></a><a href="/tags/%E7%AE%80%E6%82%A6/" style="font-size: 1.05rem;">简悦<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/" style="font-size: 1.05rem;">网络知识<sup>6</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5%E5%89%AA%E8%97%8F/" style="font-size: 1.05rem;">网页剪藏<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="font-size: 1.05rem;">虚拟机<sup>2</sup></a><a href="/tags/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">视频处理<sup>2</sup></a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%9D%82%E8%B0%88/" style="font-size: 1.05rem;">设计杂谈<sup>1</sup></a><a href="/tags/%E9%9F%B3%E4%B9%90%E6%A0%87%E7%AD%BE/" style="font-size: 1.05rem;">音乐标签<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/07/"><span class="card-archive-list-date">七月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/06/"><span class="card-archive-list-date">六月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">8</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">12</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">27</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/03/"><span class="card-archive-list-date">三月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">27</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/01/"><span class="card-archive-list-date">一月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%8E%A9%E8%BD%ACNAS/" itemprop="url">玩转NAS</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/NAS/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>NAS</span></a><a class="article-meta__tags" href="/tags/NAS%E7%9F%A5%E8%AF%86/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>NAS知识</span></a><a class="article-meta__tags" href="/tags/%E7%8E%A9%E6%9C%BA%E6%8A%80%E5%B7%A7/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>玩机技巧</span></a><a class="article-meta__tags" href="/tags/PVE/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>PVE</span></a></span></div></div><h1 class="post-title" itemprop="name headline">PVE找不到外接硬盘？你还没有挂载吧</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2025-04-24T14:00:00.000Z" title="发表于 2025-04-24 22:00:00">2025-04-24</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2025-06-01T14:00:00.000Z" title="更新于 2025-06-01 22:00:00">2025-06-01</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">1.8k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为上海"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>上海</span></div></div></div><article class="post-content" id="article-container" itemscope itemtype="https://blog.jonylee.top/2025/04/24/2025-04-24%20PVE%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%96%E6%8E%A5%E7%A1%AC%E7%9B%98%EF%BC%9F%E4%BD%A0%E8%BF%98%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E5%90%A7/"><header><a class="post-meta-categories" href="/categories/%E7%8E%A9%E8%BD%ACNAS/" itemprop="url">玩转NAS</a><a href="/tags/NAS/" tabindex="-1" itemprop="url">NAS</a><a href="/tags/NAS%E7%9F%A5%E8%AF%86/" tabindex="-1" itemprop="url">NAS知识</a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%8A%80%E5%B7%A7/" tabindex="-1" itemprop="url">玩机技巧</a><a href="/tags/PVE/" tabindex="-1" itemprop="url">PVE</a><h1 id="CrawlerTitle" itemprop="name headline">PVE找不到外接硬盘？你还没有挂载吧</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">JonyLee</span><time itemprop="dateCreated datePublished" datetime="2025-04-24T14:00:00.000Z" title="发表于 2025-04-24 22:00:00">2025-04-24</time><time itemprop="dateCreated datePublished" datetime="2025-06-01T14:00:00.000Z" title="更新于 2025-06-01 22:00:00">2025-06-01</time></header><p>我的小主机内置有一个2.5寸SATA硬盘位，我当时正好手上有一块旧的三星2.5寸SATA SSD，就把它装上了准备暂时做虚拟机的存储盘。</p>
+<p>在PVE的文本界面的<code>磁盘</code>选项里，能看到硬盘，但是当我想要为虚拟机添加磁盘的时候，死活找不到这块盘。</p>
+<p>后来网上查了才知道，在PVE中除了系统盘，其他硬盘都是需要手动挂载的，挂载之后PVE创建虚拟机、给虚拟机增加磁盘或者开启备份时，选择存储才会出现这个磁盘的选项。</p>
+<p>其实Linux系统本来外部设备就都这样，需要先挂载才能使用的，但是这个PVE的web界面的磁盘选项里，已经显示这个设备了，我还以为它已经自动挂载了呢，然而并没有！</p>
+<p>昨天写的用移动硬盘作为PVE虚拟机快照备份的存储，也是得要先手动挂载磁盘才能用。那这里就写一下基本的挂载操作，供新手参考。玩其他Linux系统的NAS，其实也能用到，挂载操作是一样的。</p>
+<p>步骤如下：</p>
+<h2 id="一、确认要挂载的设备路径"><a href="#一、确认要挂载的设备路径" class="headerlink" title="一、确认要挂载的设备路径"></a>一、确认要挂载的设备路径</h2><p>接入硬盘后，可以通过ssh命令查看移动硬盘的分区信息。pve系统也可以直接从web端查看。</p>
+<h3 id="1-使用ssh及命令行操作："><a href="#1-使用ssh及命令行操作：" class="headerlink" title="1. 使用ssh及命令行操作："></a><strong>1. 使用ssh及命令行操作：</strong></h3><p>可在连接pve的终端中，使用如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsblk  <span class="comment"># 或使用 fdisk -l</span></span><br></pre></td></tr></table></figure>
+
+<p>返回的结果，使用<code>lsblk</code>返回的是文件结构目录树，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@pve:~# lsblk                                   </span><br><span class="line">NAME         MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS  </span><br><span class="line">sda            8:0    0 111.8G  0 disk              </span><br><span class="line">└─sda1         8:1    0 111.8G  0 part /mnt/ssd-120g                            </span><br><span class="line">nvme0n1      259:0    0 238.5G  0 disk                                          </span><br><span class="line">├─nvme0n1p1  259:1    0  1007K  0 part                                          </span><br><span class="line">├─nvme0n1p2  259:2    0     1G  0 part /boot/efi                                </span><br><span class="line">└─nvme0n1p3  259:3    0 237.5G  0 part                                          </span><br><span class="line">  ├─pve-swap 252:0    0     8G  0 lvm  [SWAP]                                   </span><br><span class="line">  └─pve-root 252:1    0 229.5G  0 lvm  /</span><br></pre></td></tr></table></figure>
+
+<p>这个命令对磁盘及分区显示比较清晰，但是在挂载的时候，要记得分区前要加<code>/dev</code>，例如上例，加入确认移动硬盘为111.8G那个，则挂载的分区应为<code>/dev/sda1</code>，<strong>而不是<code>/sda</code>、<code>/sda1</code>或者<code>/sda/sda1</code></strong>，这里要注意一下。</p>
+<p>而使用另一个命令<code>fdisk -l</code>，则会显示更详细的结果，示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root@pve:~# fdisk -l                                                            </span><br><span class="line">Disk /dev/sda: 111.79 GiB, 120034123776 bytes, 234441648 sectors                </span><br><span class="line">Disk model: Samsung SSD 750                                                     </span><br><span class="line">Units: sectors of 1 * 512 = 512 bytes                                           </span><br><span class="line">Sector size (logical/physical): 512 bytes / 512 bytes                           </span><br><span class="line">I/O size (minimum/optimal): 512 bytes / 512 bytes                               </span><br><span class="line">Disklabel type: dos                                                             </span><br><span class="line">Disk identifier: 0x1ea982ce   </span><br><span class="line"></span><br><span class="line">Device    Boot Start       End   Sectors   Size Id Type                         </span><br><span class="line">/dev/sda1        2048 234441647 234439600 111.8G 83 Linux</span><br><span class="line"></span><br><span class="line"># 以下省略</span><br></pre></td></tr></table></figure>
+
+<p>用此命令，可根据<code>Disk model</code>也就是设备名称，确认你的移动硬盘，挂载分区应改从<code>Device</code>下面找，我示例里该硬盘只有一个分区，如果你移动硬盘有多个分区，需要挂载哪个，根据分区大小<code>Size</code>来寻找，挂载路径直接为前面显示的：<code>/dev/sda1</code>。</p>
+<h3 id="2-Web界面查找设备信息"><a href="#2-Web界面查找设备信息" class="headerlink" title="2. Web界面查找设备信息"></a><strong>2. Web界面查找设备信息</strong></h3><p>PVE的web界面里，点左侧的pve根节点，再点中间的<code>磁盘</code>选项，右侧会直接显示移动硬盘设备和它的分区，如下如：</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qncdn.jonylee.top/wechat/20250423110222368.png" alt="微信图片_20250423103602.png"></p>
+<p>此时确认需要挂载的备份存储分区，例如上图显示的<code>/dev/sda1</code>。</p>
+<h2 id="二、挂载外接设备"><a href="#二、挂载外接设备" class="headerlink" title="二、挂载外接设备"></a>二、挂载外接设备</h2><p><strong>挂载移动硬盘等操作只能使用命令行进行</strong></p>
+<h3 id="1-临时挂载"><a href="#1-临时挂载" class="headerlink" title="1. 临时挂载"></a><strong>1. 临时挂载</strong></h3><p>如果是临时备份使用或其他临时使用，可以使用临时挂载。</p>
+<p>创建挂载目录，假设为<code>ssd-120g</code>，一般是挂载到pve系统的<code>/mnt</code>文件夹下面。执行临时挂载，命令带<code>rw</code>赋予读写权限，并执行可写入测试（以下两行命令分别执行）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p /mnt/ssd-120g <span class="comment"># 创建挂载目录</span></span><br><span class="line">mount /dev/sda1 /mnt/ssd-120g <span class="comment"># 将设备挂载到创建的目录</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-永久挂载"><a href="#2-永久挂载" class="headerlink" title="2. 永久挂载"></a><strong>2. 永久挂载</strong></h3><p>如果是内置硬盘，或者是准备作为永久使用的外接硬盘，可以使用永久挂载，这样当机器重启的时候，它就会自动挂载。否则机器重启还需要再次手动挂载。</p>
+<p>查看硬盘的UUID：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">blkid /dev/sda1</span><br></pre></td></tr></table></figure>
+
+<p>示例返回结果如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@pve:~# blkid /dev/sda1                                                     </span><br><span class="line">/dev/sda1: UUID=<span class="string">&quot;eda1af02-5671-4e9d-a72e-535c1935106f&quot;</span> BLOCK_SIZE=<span class="string">&quot;4096&quot;</span> TYPE=<span class="string">&quot;ext4&quot;</span> PARTUUID=<span class="string">&quot;1ea982ce-01&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>在 <code>/etc/fstab</code> 中添加挂载信息。fstab是一个配置文件，开机的时候会加载，从而实现开机挂载硬盘功能。</p>
+<p>① 简便方法，可使用<code>echo</code>命令直接写入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> eda1af02-5671-4e9d-a72e-535c1935106f /mnt/ssd-120g ext4 defaults 0 0 &gt;&gt; /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p> 以上命令解释：echo命令是控制台打印，<code>echo …&gt;&gt;</code>是将控制台打印转变成输入到某个文件中，本次输入到了<code>/etc/fstab</code>文件中，也就是在<code>/etc/fstab</code> 文件中加入<code>eda1af02-5671-4e9d-a72e-535c1935106f /mnt/ssd-120g ext4 defaults 0 0</code>这行文字。</p>
+<p>写入fstab文件的格式为：<code>要挂载的硬盘UUID 挂载的目录 分区的格式 挂载的参数</code>。后面两个数字，第一个数字是dump工具会根据这个数字来决定什么时候备份，第二个数字表示fsck工具检查的优先级，一般也可以用<code>0 0</code>。</p>
+<p>② 也可以通过命令行文本编辑工具nano或者vim等来编辑fstab文件并保存。一般系统都内置了 nano 编辑器，输入命令打开文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/fstab</span><br></pre></td></tr></table></figure>
+
+<p>下面会有操作提示，提示中<code>^</code>代表<code>Ctrl</code>键。添加完按<code>Ctrl+X</code>退出，会提示是否保存更改，按<code>Y</code>保存退出即可。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qncdn.jonylee.top/wechat/20250424121232301.png" alt="微信图片_20250424120843.png"></p>
+<p>但是我觉得对新手来说还是有点麻烦。</p>
+<p>③ 还可以通过前面我分享过的sftp工具FileZilla，直接用记事本打开编辑保存。</p>
+<p>通过SFTP连接上服务器之后，在右侧找到fstab文件右键，点<code>查看/编辑</code>，即可通过记事本打开它。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qncdn.jonylee.top/wechat/20250424122144458.png" alt="微信图片_20250424120110.png"></p>
+<p>编辑完记得保存关闭。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://qncdn.jonylee.top/wechat/20250424122154345.png" alt="微信图片_20250424120226.png"></p>
+<h2 id="三、其他说明"><a href="#三、其他说明" class="headerlink" title="三、其他说明"></a>三、其他说明</h2><ol>
+<li><p>不管何种挂载，拔出设备前务必在命令行执行卸载 <code>umount /mnt/你的设备挂载目录</code>，有点类似于Windows里的点击弹出硬盘操作，避免数据损坏。</p>
+</li>
+<li><p>可能有细心的朋友看到我截图里挂载的，并没有使用UUID而是设备路径。其实硬盘挂载有好几种方式，建议优选使用UUID，因为设备路径的方式虽然直观简单，但是<strong>设备名可能变化</strong>， 当系统连接的存储设备数量或顺序发生变化时（例如新增&#x2F;移除硬盘），设备名（如 <code>sdb1</code>）可能变为 <code>sdc1</code> 或 <code>sda1</code>，导致挂载失败。而设备UUID是唯一的，不会存在这个问题。</p>
+</li>
+<li><p>如果挂载移动硬盘等是使用的NTFS&#x2F;exFAT文件系统，挂载写入可能会出现<code>Read-only file system</code>错误。这是因为Linux原生默认不支持该文件系统写入操作，这时就需要安装<code>ntfs-3g</code>驱动，使用带参数挂载，具体下期分享吧。</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/512.png" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/512.png" title="头像" alt="头像"></a><div class="post-copyright__author_name">JonyLee</div><div class="post-copyright__author_desc">拆墙设计师Jony</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://blog.jonylee.top/2025/04/24/2025-04-24%20PVE%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%96%E6%8E%A5%E7%A1%AC%E7%9B%98%EF%BC%9F%E4%BD%A0%E8%BF%98%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E5%90%A7/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://blog.jonylee.top/2025/04/24/2025-04-24 PVE找不到外接硬盘？你还没有挂载吧/')">PVE找不到外接硬盘？你还没有挂载吧</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://blog.jonylee.top/2025/04/24/2025-04-24%20PVE%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%96%E6%8E%A5%E7%A1%AC%E7%9B%98%EF%BC%9F%E4%BD%A0%E8%BF%98%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E5%90%A7/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=undefined&amp;url=https://blog.jonylee.top/2025/04/24/2025-04-24%20PVE%E6%89%BE%E4%B8%8D%E5%88%B0%E5%A4%96%E6%8E%A5%E7%A1%AC%E7%9B%98%EF%BC%9F%E4%BD%A0%E8%BF%98%E6%B2%A1%E6%9C%89%E6%8C%82%E8%BD%BD%E5%90%A7/&amp;pic=undefined" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh-hans" target="_blank">CC BY-NC-ND 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.jonylee.top" target="_blank">Jony`s Blog</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/NAS/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>NAS<span class="tagsPageCount">32</span></a><a class="post-meta__box__tags" href="/tags/NAS%E7%9F%A5%E8%AF%86/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>NAS知识<span class="tagsPageCount">28</span></a><a class="post-meta__box__tags" href="/tags/%E7%8E%A9%E6%9C%BA%E6%8A%80%E5%B7%A7/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>玩机技巧<span class="tagsPageCount">28</span></a><a class="post-meta__box__tags" href="/tags/PVE/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>PVE<span class="tagsPageCount">3</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://img.jonylee.top/i/2025/07/12/cover20250712-cloudflare-qzz.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/04/23/2025-04-23%20%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%EF%BC%81All%20in%20One%20PVE%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E7%85%A7%E5%A4%87%E4%BB%BD%E4%B8%8D%E5%8F%AF%E5%B0%91/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250423PVEbackup.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">未雨绸缪！All in One PVE虚拟机快照备份不可少</div></div></a></div><div class="next-post pull-right"><a href="/2025/04/25/2025-04-25%20NAS%E6%8C%82%E8%BD%BDNTFS%E6%A0%BC%E5%BC%8F%E7%A3%81%E7%9B%98%E6%97%A0%E6%B3%95%E5%86%99%E5%85%A5%EF%BC%9F%E9%97%AE%E9%A2%98%E5%8F%AF%E8%83%BD%E5%9C%A8%E8%BF%99/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250425NTFS.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">NAS挂载NTFS格式磁盘无法写入？问题可能在这</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2025/04/23/2025-04-23%20%E6%9C%AA%E9%9B%A8%E7%BB%B8%E7%BC%AA%EF%BC%81All%20in%20One%20PVE%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E7%85%A7%E5%A4%87%E4%BB%BD%E4%B8%8D%E5%8F%AF%E5%B0%91/" title="未雨绸缪！All in One PVE虚拟机快照备份不可少"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250423PVEbackup.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-23</div><div class="title">未雨绸缪！All in One PVE虚拟机快照备份不可少</div></div></a></div><div><a href="/2025/04/22/2025-04-22%20%E4%BA%A1%E7%BE%8A%E8%A1%A5%E7%89%A2%EF%BC%81%E7%B4%A7%E6%80%A5%E5%A4%87%E4%BB%BDAll%20in%20One%E5%AE%BF%E4%B8%BB%E7%B3%BB%E7%BB%9FPVE%E5%85%B3%E9%94%AE%E8%AE%BE%E7%BD%AE/" title="亡羊补牢！紧急备份All in One宿主系统PVE关键设置"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250422PVE.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-22</div><div class="title">亡羊补牢！紧急备份All in One宿主系统PVE关键设置</div></div></a></div><div><a href="/2025/04/11/2025-04-11%20NAS%E7%9C%9F%E6%9C%89%E9%82%A3%E4%B9%88%E9%A6%99%E5%90%97%EF%BC%9F%E7%9C%8B%E4%BA%86%E8%BF%99%E4%BA%9B%E4%BD%A0%E5%B0%B1%E7%9F%A5%E9%81%93%E3%80%82/" title="NAS真有那么香吗？看了这些你就知道"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250411nas.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-11</div><div class="title">NAS真有那么香吗？看了这些你就知道</div></div></a></div><div><a href="/2025/04/12/2025-04-12%20%E6%96%B0%E6%89%8B%E5%85%A5%E9%97%A8NAS%E6%96%B9%E6%A1%88%E6%80%8E%E4%B9%88%E9%80%89%EF%BC%9F%E4%B8%8D%E8%B5%B0%E5%BC%AF%E8%B7%AF%E7%8E%A9%E8%BD%AC%E5%AE%B6%E5%BA%AD%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83/" title="新手入门NAS方案怎么选？不走弯路玩转家庭数据中心"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250412nas选择ad.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-12</div><div class="title">新手入门NAS方案怎么选？不走弯路玩转家庭数据中心</div></div></a></div><div><a href="/2025/04/13/2025-04-13%2030%E5%85%83%E7%9A%84%E7%A1%AC%E4%BB%B6%EF%BC%8C%E5%B8%AE%E6%88%91%E6%89%93%E5%BC%80%E4%BA%86NAS%E6%96%B0%E4%B8%96%E7%95%8C%E7%9A%84%E5%A4%A7%E9%97%A8/" title="30元的硬件，帮我打开了NAS新世界的大门"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250413onecloud.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-13</div><div class="title">30元的硬件，帮我打开了NAS新世界的大门</div></div></a></div><div><a href="/2025/04/14/2025-04-14%20%E5%A4%9A-%E5%BF%AB-%E5%A5%BD-%E7%9C%81%EF%BC%81%E6%96%B0%E6%89%8B%E5%BF%85%E7%9C%8B%E7%9A%84NAS%E7%A1%AC%E7%9B%98%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" title="多-快-好-省！新手必看的NAS硬盘避坑指南"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/29/cover20250414nas硬盘ad.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-14</div><div class="title">多-快-好-省！新手必看的NAS硬盘避坑指南</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/512.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/05/28/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description">喜欢Web的建筑师，高效工作，快乐生活！</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/about"><h1 class="author-info__name">JonyLee</h1><div class="author-info__desc">拆墙设计师Jony</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/caojiezi2003" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/439956340" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget anzhiyu-right-widget" id="card-wechat" onclick="null"><div id="flip-wrapper"><div id="flip-content"><div class="face" style="background: url(/img/wechatcardface.png) center center / 100% no-repeat"></div><div class="back face" style="background: url(/img/wechatcardbackface.png) center center / 100% no-repeat"></div></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%A1%AE%E8%AE%A4%E8%A6%81%E6%8C%82%E8%BD%BD%E7%9A%84%E8%AE%BE%E5%A4%87%E8%B7%AF%E5%BE%84"><span class="toc-number">1.</span> <span class="toc-text">一、确认要挂载的设备路径</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BD%BF%E7%94%A8ssh%E5%8F%8A%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%93%8D%E4%BD%9C%EF%BC%9A"><span class="toc-number">1.1.</span> <span class="toc-text">1. 使用ssh及命令行操作：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Web%E7%95%8C%E9%9D%A2%E6%9F%A5%E6%89%BE%E8%AE%BE%E5%A4%87%E4%BF%A1%E6%81%AF"><span class="toc-number">1.2.</span> <span class="toc-text">2. Web界面查找设备信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8C%82%E8%BD%BD%E5%A4%96%E6%8E%A5%E8%AE%BE%E5%A4%87"><span class="toc-number">2.</span> <span class="toc-text">二、挂载外接设备</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%B4%E6%97%B6%E6%8C%82%E8%BD%BD"><span class="toc-number">2.1.</span> <span class="toc-text">1. 临时挂载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%B0%B8%E4%B9%85%E6%8C%82%E8%BD%BD"><span class="toc-number">2.2.</span> <span class="toc-text">2. 永久挂载</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B6%E4%BB%96%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">三、其他说明</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/07/12/2025-07-12%20%E5%85%8D%E8%B4%B9%E5%9F%9F%E5%90%8D%E8%A6%81%E4%B8%8D%E8%A6%81%EF%BC%9Fqzz.io%E5%85%8D%E8%B4%B9%E5%9F%9F%E5%90%8D%E5%B7%B2%E7%BB%8F%E5%8F%AF%E4%BB%A5%E6%89%98%E7%AE%A1%E5%88%B0Cloudflare%E4%BA%86/" title="免费域名要不要？qzz.io免费域名已经可以托管到Cloudflare了"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/07/12/cover20250712-cloudflare-qzz.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="免费域名要不要？qzz.io免费域名已经可以托管到Cloudflare了"/></a><div class="content"><a class="title" href="/2025/07/12/2025-07-12%20%E5%85%8D%E8%B4%B9%E5%9F%9F%E5%90%8D%E8%A6%81%E4%B8%8D%E8%A6%81%EF%BC%9Fqzz.io%E5%85%8D%E8%B4%B9%E5%9F%9F%E5%90%8D%E5%B7%B2%E7%BB%8F%E5%8F%AF%E4%BB%A5%E6%89%98%E7%AE%A1%E5%88%B0Cloudflare%E4%BA%86/" title="免费域名要不要？qzz.io免费域名已经可以托管到Cloudflare了">免费域名要不要？qzz.io免费域名已经可以托管到Cloudflare了</a><time datetime="2025-07-12T14:00:00.000Z" title="发表于 2025-07-12 22:00:00">2025-07-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/28/2025-06-28%20%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E4%BB%851.3G%EF%BC%81Tiny10%E7%B2%BE%E7%AE%80%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%BD%8E%E6%80%A7%E8%83%BD%E8%AE%BE%E5%A4%87%E6%8B%AF%E6%95%91%E8%80%85%EF%BC%81/" title="系统内存占用仅1.3G！Tiny10精简系统——低性能设备拯救者！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/06/28/cover20250628tiny.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="系统内存占用仅1.3G！Tiny10精简系统——低性能设备拯救者！"/></a><div class="content"><a class="title" href="/2025/06/28/2025-06-28%20%E7%B3%BB%E7%BB%9F%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%E4%BB%851.3G%EF%BC%81Tiny10%E7%B2%BE%E7%AE%80%E7%B3%BB%E7%BB%9F%E2%80%94%E2%80%94%E4%BD%8E%E6%80%A7%E8%83%BD%E8%AE%BE%E5%A4%87%E6%8B%AF%E6%95%91%E8%80%85%EF%BC%81/" title="系统内存占用仅1.3G！Tiny10精简系统——低性能设备拯救者！">系统内存占用仅1.3G！Tiny10精简系统——低性能设备拯救者！</a><time datetime="2025-06-28T14:00:00.000Z" title="发表于 2025-06-28 22:00:00">2025-06-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/22/2025-06-22%20%E7%A5%9E%E5%A5%87%E7%9A%84%E5%AE%89%E5%8D%93%E6%92%AD%E6%94%BE%E5%99%A8%EF%BC%81%E8%81%9A%E5%90%88%E5%85%A8%E7%BD%91%E8%B5%84%E6%BA%90%E4%B8%80%E7%AB%99%E5%BC%8F%E8%A7%82%E7%9C%8B/" title="神奇的安卓播放器！聚合全网资源一站式观看"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/06/22/cover20250622-Tvbox.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="神奇的安卓播放器！聚合全网资源一站式观看"/></a><div class="content"><a class="title" href="/2025/06/22/2025-06-22%20%E7%A5%9E%E5%A5%87%E7%9A%84%E5%AE%89%E5%8D%93%E6%92%AD%E6%94%BE%E5%99%A8%EF%BC%81%E8%81%9A%E5%90%88%E5%85%A8%E7%BD%91%E8%B5%84%E6%BA%90%E4%B8%80%E7%AB%99%E5%BC%8F%E8%A7%82%E7%9C%8B/" title="神奇的安卓播放器！聚合全网资源一站式观看">神奇的安卓播放器！聚合全网资源一站式观看</a><time datetime="2025-06-22T14:00:00.000Z" title="发表于 2025-06-22 22:00:00">2025-06-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/15/2025-06-15%20Docker%E7%9B%AE%E5%BD%95%E4%B9%BE%E5%9D%A4%E5%A4%A7%E6%8C%AA%E7%A7%BB%EF%BC%8C%E6%8B%AF%E6%95%91%E4%BD%A0%E7%9A%84NAS%E7%B3%BB%E7%BB%9F%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%EF%BC%81/" title="Docker目录乾坤大挪移，拯救你的NAS系统存储空间！"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/06/15/cover20250615dockermv.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Docker目录乾坤大挪移，拯救你的NAS系统存储空间！"/></a><div class="content"><a class="title" href="/2025/06/15/2025-06-15%20Docker%E7%9B%AE%E5%BD%95%E4%B9%BE%E5%9D%A4%E5%A4%A7%E6%8C%AA%E7%A7%BB%EF%BC%8C%E6%8B%AF%E6%95%91%E4%BD%A0%E7%9A%84NAS%E7%B3%BB%E7%BB%9F%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%EF%BC%81/" title="Docker目录乾坤大挪移，拯救你的NAS系统存储空间！">Docker目录乾坤大挪移，拯救你的NAS系统存储空间！</a><time datetime="2025-06-15T14:00:00.000Z" title="发表于 2025-06-15 22:00:00">2025-06-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/06/13/2025-06-13%20%E9%A2%9C%E5%80%BC%E5%9C%A8%E7%BA%BF%E5%8A%9F%E8%83%BD%E6%AF%94Alist%E6%9B%B4%E5%BC%BA%E5%A4%A7%EF%BC%81%E9%A3%9E%E7%89%9B%E9%83%A8%E7%BD%B2%E4%BD%93%E9%AA%8C%E8%85%BE%E9%A3%9EWebos/" title="颜值在线功能比Alist更强大！飞牛部署体验腾飞Webos"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.jonylee.top/i/2025/06/13/cover20250613webos.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="颜值在线功能比Alist更强大！飞牛部署体验腾飞Webos"/></a><div class="content"><a class="title" href="/2025/06/13/2025-06-13%20%E9%A2%9C%E5%80%BC%E5%9C%A8%E7%BA%BF%E5%8A%9F%E8%83%BD%E6%AF%94Alist%E6%9B%B4%E5%BC%BA%E5%A4%A7%EF%BC%81%E9%A3%9E%E7%89%9B%E9%83%A8%E7%BD%B2%E4%BD%93%E9%AA%8C%E8%85%BE%E9%A3%9EWebos/" title="颜值在线功能比Alist更强大！飞牛部署体验腾飞Webos">颜值在线功能比Alist更强大！飞牛部署体验腾飞Webos</a><time datetime="2025-06-13T14:00:00.000Z" title="发表于 2025-06-13 22:00:00">2025-06-13</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="footer_deal"><a class="deal_link" href="mailto:249085952@qq.com" title="email"><i class="anzhiyufont anzhiyu-icon-envelope"></i></a><a class="deal_link" href="https://weibo.com/u/2196029610" title="微博"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a><img class="footer_mini_logo" title="返回顶部" alt="返回顶部" onclick="anzhiyu.scrollToDest(0, 500)" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/512.png" size="50px"/><a class="deal_link" href="https://github.com/caojiezi2003" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="deal_link" href="https://space.bilibili.com/439956340" title="Bilibili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v5.4.0" title="博客框架为Hexo_v5.4.0"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Frame-Hexo.svg" alt="博客框架为Hexo_v5.4.0"/></a><a class="github-badge" target="_blank" href="https://blog.anheyu.com/" style="margin-inline:5px" data-title="本站使用AnZhiYu主题" title="本站使用AnZhiYu主题"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.9/img/Theme-AnZhiYu-2E67D3.svg" alt="本站使用AnZhiYu主题"/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title="本站项目由Github托管"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.1.5/img/badge/Source-Github.svg" alt="本站项目由Github托管"/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.2.0/img/badge/Copyright-BY-NC-SA.svg" alt="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可"/></a></p></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 By <a class="footer-bar-link" href="/" title="JonyLee" target="_blank">JonyLee</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" href="https://beian.miit.gov.cn/" title="沪ICP备2023021298号-1">沪ICP备2023021298号-1</a><a class="footer-bar-link cc" href="/copyright" title="cc协议"><i class="anzhiyufont anzhiyu-icon-copyright-line"></i><i class="anzhiyufont anzhiyu-icon-creative-commons-by-line"></i><i class="anzhiyufont anzhiyu-icon-creative-commons-nc-line"></i><i class="anzhiyufont anzhiyu-icon-creative-commons-nd-line"></i></a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">76</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">49</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">7</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" href="https://jonylee.top/" title="主页"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/home.png" alt="主页"/><span class="back-menu-item-text">主页</span></a><a class="back-menu-item" href="https://blog.jonylee.top/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/128.png" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">应用</div><div class="back-menu-list"><a class="back-menu-item" href="https://start.jonylee.top/" title="搜·全网"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/search.png" alt="搜·全网"/><span class="back-menu-item-text">搜·全网</span></a><a class="back-menu-item" href="https://music.jonylee.top/" title="听·音乐"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/music.png" alt="听·音乐"/><span class="back-menu-item-text">听·音乐</span></a><a class="back-menu-item" href="https://hot.jonylee.top/" title="看·热榜"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/--tinder.png" alt="看·热榜"/><span class="back-menu-item-text">看·热榜</span></a><a class="back-menu-item" href="https://jonylee.top/mindmap/" title="思·导图"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/idea.png" alt="思·导图"/><span class="back-menu-item-text">思·导图</span></a><a class="back-menu-item" href="https://w.jonylee.top/" title="记·笔记"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/edit--v1.png" alt="记·笔记"/><span class="back-menu-item-text">记·笔记</span></a><a class="back-menu-item" href="https://chat.jonylee.top/" title="问·AI"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.icons8.com/fluency/144/bard.png" alt="问·AI"/><span class="back-menu-item-text">问·AI</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 拾光</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/equipment/"><i class="anzhiyufont anzhiyu-icon-dice-d20 faa-tada" style="font-size: 0.9em;"></i><span> 好物荐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI%E5%BA%94%E7%94%A8/" style="font-size: 0.88rem;">AI应用<sup>4</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>2</sup></a><a href="/tags/Markdown/" style="font-size: 0.88rem;">Markdown<sup>6</sup></a><a href="/tags/NAS/" style="font-size: 0.88rem;">NAS<sup>32</sup></a><a href="/tags/NAS%E7%9F%A5%E8%AF%86/" style="font-size: 0.88rem;">NAS知识<sup>28</sup></a><a href="/tags/Obsidian/" style="font-size: 0.88rem;">Obsidian<sup>1</sup></a><a href="/tags/PC%E8%BD%AF%E4%BB%B6/" style="font-size: 0.88rem;">PC软件<sup>20</sup></a><a href="/tags/PVE/" style="font-size: 0.88rem;">PVE<sup>3</sup></a><a href="/tags/UNRAID/" style="font-size: 0.88rem;">UNRAID<sup>2</sup></a><a href="/tags/emoji/" style="font-size: 0.88rem;">emoji<sup>1</sup></a><a href="/tags/%E4%B8%8B%E8%BD%BD%E5%99%A8/" style="font-size: 0.88rem;">下载器<sup>2</sup></a><a href="/tags/%E4%BA%A7%E5%93%81%E8%AE%BE%E8%AE%A1/" style="font-size: 0.88rem;">产品设计<sup>1</sup></a><a href="/tags/%E5%85%8D%E8%B4%B9%E9%9F%B3%E4%B9%90%E8%B5%84%E6%BA%90/" style="font-size: 0.88rem;">免费音乐资源<sup>1</sup></a><a href="/tags/%E5%86%99%E4%BD%9C%E5%B7%A5%E5%85%B7/" style="font-size: 0.88rem;">写作工具<sup>1</sup></a><a href="/tags/%E5%8A%9E%E5%85%AC%E8%BD%AF%E4%BB%B6/" style="font-size: 0.88rem;">办公软件<sup>1</sup></a><a href="/tags/%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/" style="font-size: 0.88rem;">图像处理<sup>4</sup></a><a href="/tags/%E5%9B%BE%E7%A4%BA%E5%B7%A5%E5%85%B7/" style="font-size: 0.88rem;">图示工具<sup>1</sup></a><a href="/tags/%E5%9C%A8%E7%BA%BF%E5%B7%A5%E5%85%B7/" style="font-size: 0.88rem;">在线工具<sup>10</sup></a><a href="/tags/%E5%A3%81%E7%BA%B8/" style="font-size: 0.88rem;">壁纸<sup>1</sup></a><a href="/tags/%E5%BC%80%E6%BA%90%E5%BA%94%E7%94%A8/" style="font-size: 0.88rem;">开源应用<sup>8</sup></a><a href="/tags/%E5%BD%B1%E9%9F%B3%E5%A8%B1%E4%B9%90/" style="font-size: 0.88rem;">影音娱乐<sup>9</sup></a><a href="/tags/%E6%80%9D%E7%BB%B4%E5%AF%BC%E5%9B%BE/" style="font-size: 0.88rem;">思维导图<sup>1</sup></a><a href="/tags/%E6%89%8B%E6%9C%BA%E8%BD%AF%E4%BB%B6/" style="font-size: 0.88rem;">手机软件<sup>6</sup></a><a href="/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/" style="font-size: 0.88rem;">搜索引擎<sup>1</sup></a><a href="/tags/%E6%92%AD%E6%94%BE%E5%99%A8/" style="font-size: 0.88rem;">播放器<sup>5</sup></a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" style="font-size: 0.88rem;">效率工具<sup>30</sup></a><a href="/tags/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E5%99%A8/" style="font-size: 0.88rem;">文件管理器<sup>1</sup></a><a href="/tags/%E6%96%B9%E6%B3%95%E6%8A%80%E5%B7%A7/" style="font-size: 0.88rem;">方法技巧<sup>4</sup></a><a href="/tags/%E6%99%AE%E5%88%A9%E5%85%B9%E5%85%8B%E5%A5%96/" style="font-size: 0.88rem;">普利兹克奖<sup>1</sup></a><a href="/tags/%E6%99%BA%E8%83%BD%E7%9B%B8%E5%86%8C/" style="font-size: 0.88rem;">智能相册<sup>1</sup></a><a href="/tags/%E6%B5%81%E7%A8%8B%E5%9B%BE/" style="font-size: 0.88rem;">流程图<sup>2</sup></a><a href="/tags/%E7%8E%A9%E5%AE%A2%E4%BA%91/" style="font-size: 0.88rem;">玩客云<sup>1</sup></a><a href="/tags/%E7%8E%A9%E6%9C%BA%E6%8A%80%E5%B7%A7/" style="font-size: 0.88rem;">玩机技巧<sup>28</sup></a><a href="/tags/%E7%AE%80%E6%82%A6/" style="font-size: 0.88rem;">简悦<sup>1</sup></a><a href="/tags/%E7%BD%91%E7%BB%9C%E7%9F%A5%E8%AF%86/" style="font-size: 0.88rem;">网络知识<sup>6</sup></a><a href="/tags/%E7%BD%91%E9%A1%B5%E5%89%AA%E8%97%8F/" style="font-size: 0.88rem;">网页剪藏<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E6%9C%BA/" style="font-size: 0.88rem;">虚拟机<sup>2</sup></a><a href="/tags/%E8%A7%86%E9%A2%91%E5%A4%84%E7%90%86/" style="font-size: 0.88rem;">视频处理<sup>2</sup></a><a href="/tags/%E8%AE%BE%E8%AE%A1%E6%9D%82%E8%B0%88/" style="font-size: 0.88rem;">设计杂谈<sup>1</sup></a><a href="/tags/%E9%9F%B3%E4%B9%90%E6%A0%87%E7%AD%BE/" style="font-size: 0.88rem;">音乐标签<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8594201732" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://music.163.com/#/playlist?id=8594201732&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("01/01/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 JonyLee 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://waline.jonylee.top',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+      imageUploader: true,
+    }, null))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    anzhiyu.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.cbd.int/@waline/client@3.1.3/dist/waline.css')
+      if (true) await getCSS('https://cdn.cbd.int/@waline/client@3.1.3/dist/waline-meta.css')
+      const { init } = await import('https://cdn.cbd.int/@waline/client@3.1.3/dist/waline.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>window.addEventListener('load', () => {
+  const changeContent = content => {
+    if (content === '') return content
+
+    content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[图片]') // replace image link
+    content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[链接]') // replace url
+    content = content.replace(/<pre><code>.*?<\/pre>/gi, '[代码]') // replace code
+    content = content.replace(/<[^>]+>/g,"") // remove html tag
+
+    if (content.length > 150) {
+      content = content.substring(0,150) + '...'
+    }
+    return content
+  }
+
+  const generateHtml = array => {
+    let result = ''
+
+    if (array.length) {
+      for (let i = 0; i < array.length; i++) {
+        result += '<div class=\'aside-list-item\'>'
+
+        if (true) {
+          const name = 'data-lazy-src'
+          result += `<a href='${array[i].url}' class='thumbnail'><img ${name}='${array[i].avatar}' alt='${array[i].nick}'></a>`
+        }
+
+        result += `<div class='content'>
+        <a class='comment' href='${array[i].url}' title='${array[i].content}'>${array[i].content}</a>
+        <div class='name'><span>${array[i].nick} / </span><time datetime="${array[i].date}">${anzhiyu.diffDate(array[i].date, true)}</time></div>
+        </div></div>`
+      }
+    } else {
+      result += '没有评论'
+    }
+
+    let $dom = document.querySelector('#card-newest-comments .aside-list')
+    $dom && ($dom.innerHTML= result)
+    window.lazyLoadInstance && window.lazyLoadInstance.update()
+    window.pjax && window.pjax.refresh($dom)
+  }
+
+  const getComment = async () => {
+    try {
+      const res = await fetch('https://waline.jonylee.top/api/comment?type=recent&count=6', { method: 'GET' })
+      const result = await res.json()
+      const walineArray = result.data.map(e => {
+        return {
+          'content': changeContent(e.comment),
+          'avatar': e.avatar,
+          'nick': e.nick,
+          'url': e.url + '#' + e.objectId,
+          'date': e.time || e.insertedAt
+        }
+      })
+      saveToLocal.set('waline-newest-comments', JSON.stringify(walineArray), 10/(60*24))
+      generateHtml(walineArray)
+    } catch (err) {
+      console.error(err)
+      const $dom = document.querySelector('#card-newest-comments .aside-list')
+      $dom.textContent= "无法获取评论，请确认相关配置是否正确"
+    }
+  }
+
+  const newestCommentInit = () => {
+    if (document.querySelector('#card-newest-comments .aside-list')) {
+      const data = saveToLocal.get('waline-newest-comments')
+      if (data) {
+        generateHtml(JSON.parse(data))
+      } else {
+        getComment()
+      }
+    }
+  }
+
+  newestCommentInit()
+  document.addEventListener('pjax:complete', newestCommentInit)
+})</script><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
